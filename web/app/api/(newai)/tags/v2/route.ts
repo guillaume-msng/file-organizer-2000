@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       fileName, 
       existingTags = [], 
       customInstructions = "", 
-      count = 3 
+      count = 5 
     } = await request.json();
 
     const response = await generateObject({

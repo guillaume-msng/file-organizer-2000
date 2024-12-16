@@ -12,14 +12,14 @@ const suggestion = {
     if (query.length === 0) {
       return [
         ...allFiles.slice(0, 5),
-        ...allTags.slice(0, 3),
+        ...allTags.slice(0, 5),
         ...allFolders.slice(0, 2)
       ]
     }
 
     const fuse = new Fuse([
       ...allFiles,
-      ...allTags.slice(0, 3),
+      ...allTags.slice(0, 5),
       ...allFolders
     ], {
       keys: ['title'],

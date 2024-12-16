@@ -11,11 +11,11 @@ export async function POST(request: NextRequest) {
     const { content, fileName } = await request.json();
     const model = getModel(process.env.MODEL_NAME);
     const isUntitled = fileName.toLowerCase().includes('untitled');
-    const prompt = `Generate 3 tags for the ${isUntitled ? 'content' : 'file "' + fileName + '" and content'} "${content}":
+    const prompt = `Generate 5 tags for the ${isUntitled ? 'content' : 'file "' + fileName + '" and content'} "${content}":
     
-    1. One tag reflecting the topic or platform
+    1. Two tags reflecting the topic or platform
     2. One tag indicating the document type (e.g., meeting_notes, research, brainstorm, draft).
-    3. One more specific tag inspired by the file name 
+    3. Two more specific tag inspired by the file name 
     4. Use hyphens for multi-word tags.
     5. Ensure tags are concise and reusable across notes.
     6. Return null if no tags can be generated.
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       model,
       temperature: 0.5,
       schema: z.object({
-        tags: z.array(z.string()).max(3),
+        tags: z.array(z.string()).max(5),
       }),
       prompt: prompt,
     });

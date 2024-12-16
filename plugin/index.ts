@@ -708,6 +708,7 @@ export default class FileOrganizer extends Plugin {
     }
 
     const { tags: suggestedTags } = await response.json();
+    console.log(suggestedTags)
     return suggestedTags;
   }
 

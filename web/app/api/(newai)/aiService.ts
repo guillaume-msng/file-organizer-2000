@@ -23,7 +23,7 @@ export async function generateTags(
   // when in vault tags mode
   if (Array.isArray(vaultTags)) {
     // Use existing tags from the vault
-    prompt = `Given the text "${content}" (and if relevant ${fileName}), identify the at most 3 relevant tags from the following list, sorted from most commonly found to least commonly found: ${vaultTags.join(
+    prompt = `Given the text "${content}" (and if relevant ${fileName}), identify the at most 5 relevant tags from the following list, sorted from most commonly found to least commonly found: ${vaultTags.join(
       ", "
     )}`
     // when in generate new tags mode
@@ -35,7 +35,7 @@ export async function generateTags(
   const response = await generateObject({
     model,
     schema: z.object({
-      tags: z.array(z.string().refine(tag => tag.toLowerCase() !== 'none')).length(3),
+      tags: z.array(z.string().refine(tag => tag.toLowerCase() !== 'none')).length(5),
     }),
 
     prompt: prompt,
@@ -57,13 +57,13 @@ export async function generateExistingTags(
   vaultTags: string[],
   model: LanguageModel
 ) {
-  const prompt = `For "${content}" (file: "${fileName}"), select up to 3 tags from: ${vaultTags.join(", ")}. Only choose tags with an evident link to the main topics that is not too specific. If none meet this criterion, return null.`;
+  const prompt = `For "${content}" (file: "${fileName}"), select up to 5 tags from: ${vaultTags.join(", ")}. Only choose tags with an evident link to the main topics that is not too specific. If none meet this criterion, return null.`;
 
   const response = await generateObject({
     model,
     temperature: 0,
     schema: z.object({
-      tags: z.array(z.string()).max(3),
+      tags: z.array(z.string()).max(5),
     }),
     prompt: prompt,
   });
